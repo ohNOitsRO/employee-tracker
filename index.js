@@ -18,8 +18,32 @@ const db = mysql.createConnection(
   );
 
 
-  app.listen(PORT, () => {
-    console.log(`Server running live on port ${PORT}`);
+  const questions = () => {
+    inquirer
+      .prompt([
+        {
+          name: "menu",
+          type: "list",
+          message: "MAIN MENU",
+          choices: [
+            "View All Departments",
+            "View All Roles",
+            "View All Employees",
+            "Add a Department",
+            "Add a Role",
+            "Add an Employee",
+            "Update an Employee Role",
+          ],
+        },
+      ])}
 
-  });
-  
+
+
+
+
+
+
+
+sequelize.sync().then(() => {
+  app.listen(PORT, () => console.log('Listening...'));
+});
