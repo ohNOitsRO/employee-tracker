@@ -20,7 +20,7 @@ const sequelize = require('./config/connection');
 
   const questions = () => {
     inquirer
-      .prompt([
+      .prompt(
         {
           name: "menu",
           type: "list",
@@ -35,7 +35,7 @@ const sequelize = require('./config/connection');
             "Update an Employee Role",
           ],
         },
-      ])}
+      )}
 
 
 
