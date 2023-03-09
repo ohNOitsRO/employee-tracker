@@ -1,7 +1,7 @@
 const mysql = require('mysql2');
 const inquirer = require('inquirer');
 const cTable = require('console.table');
-const sequelize = require('./config/connection');
+const server = require('./config/connection');
 
 const app = express();
 const PORT = process.env.PORT || 3001;
@@ -10,21 +10,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
 
-const db = mysql.createConnection(
-    {
-      host: 'localhost',
-      // MySQL username,
-      user: 'root',
-      // TODO: Add MySQL password here
-      password: '',
-      database: 'employees_db'
-    },
-    console.log(`Connected to the employees_db database.`)
-    
-  );
-
-
-  const questions = () => {
+const questions = () => {
     inquirer
       .prompt(
         {
@@ -46,7 +32,8 @@ const db = mysql.createConnection(
 
 
 function allDepts() {
-
+  connection.query(
+    "SELECT employee.id, employee.first_name, employee.last_name, employee.role_id, employee.manager_id, role.title, role.salary, role.id, department.id FROM employee LEFT JOIN role ON employee.role_id = role.id LEFT JOIN department ON role.department_id = department.id");
 
 
 
@@ -54,13 +41,13 @@ function allDepts() {
 
 
 function allRoles() {
-
+  connection.query("SELECT role.id, role.title, role.salary, role.department_id, department.id, department.name FROM role LEFT JOIN department on role.department_id = department.id");
 
 
 }
 
 
-function allEmps() {
+function allEmployees() {
 
 
 
@@ -87,14 +74,5 @@ function addEmp() {
 function updateRole() {
 
 
-  
+
 }
-
-
-
-
-
-
-sequelize.sync().then(() => {
-  app.listen(PORT, () => console.log('Listening...'));
-});
