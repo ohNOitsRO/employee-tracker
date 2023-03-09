@@ -3,19 +3,25 @@ const inquirer = require('inquirer');
 const cTable = require('console.table');
 const sequelize = require('./config/connection');
 
-// Connect to database
-// const db = mysql.createConnection(
-//     {
-//       host: 'DB_NAME',
-//       // MySQL username,
-//       user: 'root',
-//       // TODO: Add MySQL password here
-//       password: '',
-//       database: 'employees_db'
-//     },
-//     console.log(`Connected to the employees_db database.`)
+const app = express();
+const PORT = process.env.PORT || 3001;
+
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
+
+
+const db = mysql.createConnection(
+    {
+      host: 'localhost',
+      // MySQL username,
+      user: 'root',
+      // TODO: Add MySQL password here
+      password: '',
+      database: 'employees_db'
+    },
+    console.log(`Connected to the employees_db database.`)
     
-//   );
+  );
 
 
   const questions = () => {
@@ -38,6 +44,51 @@ const sequelize = require('./config/connection');
       )}
 
 
+
+function allDepts() {
+
+
+
+
+}
+
+
+function allRoles() {
+
+
+
+}
+
+
+function allEmps() {
+
+
+
+}
+
+function addDept() {
+
+
+
+}
+
+
+function addRole() {
+
+
+
+}
+
+function addEmp() {
+
+
+}
+
+function updateRole() {
+
+
+  
+}
 
 
 
