@@ -13,9 +13,9 @@ VALUES ("Manager", 95000, 101),
        ("Receptionist", 40000, 105);
 
 INSERT INTO employee (first_name, last_name, role_id, manager_id)
-VALUES ("White", "Walter", 1375, 11),
-       ("Pinkman", "Jesse", 1667, 14),
-       ("Schrader", "Hank", 1889, 16),
-       ("Fring", "Gus", 1717, 12),
-       ("Goodman", "Saul", 1315, 19);
+VALUES ("Walter", "White", 1375, 11),
+       ("Jesse", "Pinkman", 1667, 14),
+       ("Hank", "Schrader", 1889, 16),
+       ("Gus", "Fring", 1717, 12),
+       ("Saul", "Goodman", 1315, 19);
        
