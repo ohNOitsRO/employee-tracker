@@ -1,5 +1,5 @@
 const inquirer = require('inquirer');
-const cTable = require('console.table');
+require('console.table');
 const db = require('./config/connection');
 
 
@@ -45,28 +45,28 @@ const questions = async () => {
               updateEmployee();
               break;
             case "Exit":
-              quit();
-            default:
-              quit();
+              process.exit();
+            // default:
+            //   quit();
           }
         });
 }
 
 function allDepts(data) {
   db.query("SELECT * FROM department");
-  cTable(data);
+  console.table(data);
 
 }
 
-function allRoles() {
+function allRoles(data) {
   db.query("SELECT * FROM role");
-  cTable(data);
+  console.table(data);
 
 }
 
 function allEmployees() {
   db.query("SELECT employee.id, employee.first_name, employee.last_name, employee.role_id, employee.manager_id, role.title, role.salary, role.id, department.id FROM employee LEFT JOIN role ON employee.role_id = role.id LEFT JOIN department ON role.department_id = department.id");
-  cTable(data);
+  console.table(data);
 
 }
 
