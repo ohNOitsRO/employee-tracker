@@ -4,7 +4,7 @@ const db = require('./config/connection');
 
 
 const questions = () => {
-    inquirer.prompt(
+    return inquirer.prompt(
         {
           name: "menu",
           type: "list",
@@ -71,7 +71,7 @@ function allEmployees() {
 }
 
 function addDept() {
-  inquirer.prompt (
+  return inquirer.prompt (
     {
         type: 'input',
         name: 'newDept',
@@ -88,7 +88,7 @@ function addDept() {
 
 
 function addRole() {
-  inquirer.prompt (
+  return inquirer.prompt (
     {
         type: 'input',
         name: 'newRole',
@@ -116,7 +116,7 @@ function addRole() {
 
 
 function addEmployee() {
-  inquirer.prompt(
+  return inquirer.prompt(
     {
       type: "input",
       message: "What's the first name of the employee?",
@@ -145,7 +145,7 @@ function addEmployee() {
 }
 
 function updateEmployee() {
-  inquirer
+  return inquirer
     .prompt(
       {
         type: "input",
