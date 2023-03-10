@@ -6,11 +6,11 @@ VALUES (01, "Billing"),
        (05, "Administration");
 
 INSERT INTO role (title, salary, department_id)
-VALUES ("Manager", 95000, 101),
-       ("Senior Lead", 65000, 102),
-       ("Engineer", 80000, 103),
-       ("Customer Liaison", 50000, 104),
-       ("Receptionist", 40000, 105);
+VALUES ("Manager", 95000.00, 101),
+       ("Senior Lead", 65000.00, 102),
+       ("Engineer", 80000.00, 103),
+       ("Customer Liaison", 50000.00, 104),
+       ("Receptionist", 40000.00, 105);
 
 INSERT INTO employee (first_name, last_name, role_id, manager_id)
 VALUES ("Walter", "White", 1375, 11),
