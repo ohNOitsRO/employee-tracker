@@ -1,5 +1,5 @@
-const inquirer = require('inquirer');
 require('console.table');
+const inquirer = require('inquirer');
 const db = require('./config/connection');
 
 
@@ -46,8 +46,7 @@ const questions = async () => {
               break;
             case "Exit":
               process.exit();
-            // default:
-            //   quit();
+                    
           }
         });
 }
