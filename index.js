@@ -1,13 +1,7 @@
 const mysql = require('mysql2');
 const inquirer = require('inquirer');
 const cTable = require('console.table');
-const server = require('./config/connection');
-
-const app = express();
-const PORT = process.env.PORT || 3001;
-
-app.use(express.json());
-app.use(express.urlencoded({ extended: true }));
+const db = require('./config/connection');
 
 
 const questions = () => {
@@ -25,54 +19,154 @@ const questions = () => {
             "Add a Role",
             "Add an Employee",
             "Update an Employee Role",
+            "Exit"
           ],
-        },
-      )}
-
-
-
-function allDepts() {
-  connection.query(
-    "SELECT employee.id, employee.first_name, employee.last_name, employee.role_id, employee.manager_id, role.title, role.salary, role.id, department.id FROM employee LEFT JOIN role ON employee.role_id = role.id LEFT JOIN department ON role.department_id = department.id");
-
-
-
+        })
+        .then(function(choice) {
+          switch (choice.option) {
+            case "View All Departments":
+              allDepts();
+              break;
+            case "View All Roles":
+              allRoles();
+              break;
+            case "View All Employees":
+              allEmployees();
+              break;
+            case "Add a Department":
+              addDept();
+              break;
+            case "Add a Role":
+              addRole();
+              break;
+            case "Add an Employee":
+              addEmployee();
+              break;
+            case "Update an Employee Role":
+              updateEmployee();
+              break;
+            case "Exit":
+              quit();
+            default:
+              quit();
+          }
+        });
 }
 
+function allDepts(data) {
+  db.query("SELECT * FROM department");
+  cTable(data);
+
+}
 
 function allRoles() {
-  connection.query("SELECT role.id, role.title, role.salary, role.department_id, department.id, department.name FROM role LEFT JOIN department on role.department_id = department.id");
-
+  db.query("SELECT * FROM role");
+  cTable(data);
 
 }
 
-
 function allEmployees() {
-
-
+  db.query("SELECT employee.id, employee.first_name, employee.last_name, employee.role_id, employee.manager_id, role.title, role.salary, role.id, department.id FROM employee LEFT JOIN role ON employee.role_id = role.id LEFT JOIN department ON role.department_id = department.id");
 
 }
 
 function addDept() {
+  inquirer.prompt (
+    {
+        type: 'input',
+        name: 'newDept',
+        message: 'What is the name of the new Department you would like to add?'
+
+    }
+
+    .then(function (deptName) {
+      connection.query("INSERT INTO department (name) VALUES (?)", [deptName.newDept]);
 
 
-
-}
+    })
+    
+)}
 
 
 function addRole() {
+  inquirer.prompt (
+    {
+        type: 'input',
+        name: 'newRole',
+        message: 'What is the name of the new Role you would like to add?'
 
+    },
+    {
+      type: 'input',
+      name: 'newSalary',
+      message: 'What is the salary of the new Role?'
 
+    },
+    {
+    type: 'input',
+    name: 'newRoleDept',
+    message: 'What is the id of the department the new Role belongs to?'
+    })
 
+    .then(function (roleName) {
+      connection.query("INSERT INTO role (title, salary, department_id) VALUES (?, ?, ?)", [roleName.newRole, roleName.newSalary, roleName.newRoleDept]);
+
+    })
 }
 
-function addEmp() {
 
 
+function addEmployee() {
+  inquirer
+  .prompt(
+    {
+      type: "input",
+      message: "What's the first name of the employee?",
+      name: "newFirstName"
+    },
+    {
+      type: "input",
+      message: "What's the last name of the employee?",
+      name: "newLastName"
+    },
+    {
+      type: "input",
+      message: "What is the employees role id number?",
+      name: "newRoleID"
+    },
+    {
+      type: "input",
+      message: "What is the manager id number?",
+      name: "managerID"
+    }
+  )
+  .then(function (employeeName) {
+    connection.query("INSERT INTO employee (first_name, last_name, role_id, manager_id) VALUES (?, ?, ?, ?)", [employeeName.newFirstName, employeeName.newLastName, employeeName.newRoleID, employeeName.managerID]);
+  
+  })
 }
 
 function updateRole() {
+  inquirer
+    .prompt(
+      {
+        type: "input",
+        message: "Which employee would you like to update?",
+        name: "employeeUpdate"
+      },
 
+      {
+        type: "input",
+        message: "What do you want to update to?",
+        name: "roleUpdate"
+      }
+    )
 
+    .then(function (update) {
+      connection.query("INSERT INTO employee (first_name, last_name, role_id, manager_id) VALUES (?, ?, ?, ?)", [update.employeeUpdate, update.roleUpdate]);
+    
+    })
 
 }
+
+questions();
