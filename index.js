@@ -3,8 +3,8 @@ const cTable = require('console.table');
 const db = require('./config/connection');
 
 
-const questions = () => {
-    return inquirer.prompt(
+const questions = async () => {
+    await inquirer.prompt(
         {
           name: "menu",
           type: "list",
@@ -70,8 +70,8 @@ function allEmployees() {
 
 }
 
-function addDept() {
-  return inquirer.prompt (
+const addDept = async () => {
+  await inquirer.prompt (
     {
         type: 'input',
         name: 'newDept',
@@ -87,8 +87,8 @@ function addDept() {
 )}
 
 
-function addRole() {
-  return inquirer.prompt (
+const addRole = async () => {
+  await inquirer.prompt (
     {
         type: 'input',
         name: 'newRole',
@@ -115,8 +115,8 @@ function addRole() {
 
 
 
-function addEmployee() {
-  return inquirer.prompt(
+const addEmployee = async () => {
+  await inquirer.prompt(
     {
       type: "input",
       message: "What's the first name of the employee?",
@@ -144,9 +144,8 @@ function addEmployee() {
   })
 }
 
-function updateEmployee() {
-  return inquirer
-    .prompt(
+async function updateEmployee() {
+  await inquirer.prompt(
       {
         type: "input",
         message: "Which employee would you like to update?",
@@ -167,4 +166,8 @@ function updateEmployee() {
 
 }
 
-questions();
+function init() {
+    questions();
+}
+
+init();
