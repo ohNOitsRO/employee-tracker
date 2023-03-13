@@ -1,6 +1,6 @@
 require('console.table');
 const inquirer = require('inquirer');
-const db = require('./config/connection');
+const { db } = require('./config/connection');
 
 
 const questions = async () => {
@@ -22,7 +22,7 @@ const questions = async () => {
         })
 
         .then(function(choice) {
-          switch (choice.option) {
+          switch (choice.menu) {
             case "View All Departments":
               allDepts();
               break;
@@ -160,13 +160,21 @@ async function updateEmployee() {
 
     .then(function (update) {
       db.query("INSERT INTO employee (first_name, last_name, role_id, manager_id) VALUES (?, ?, ?, ?)", [update.employeeUpdate, update.roleUpdate]);
+      
     
     })
 
 }
 
-function init() {
-    questions();
+async function init() {
+    await questions();
 }
 
 init();
+
+
+
+// db.query('INSERT INTO employee (first_name, last_name, role_id, manager_id) VALUES (?, ?, ?, ?)', (err, [update.employeeUpdate, update.roleUpdate]) => {
+//   if (err) throw err;
+//   console.table(data);
+// })
