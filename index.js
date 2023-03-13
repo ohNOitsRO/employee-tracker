@@ -49,25 +49,31 @@ const questions = async () => {
                     
           }
         });
-}
+};
 
-function allDepts(data) {
-  db.query("SELECT * FROM department");
-  console.table(data);
+function allDepts() {
+  db.query("SELECT * FROM department"), function(err, res) {
+    if (err) throw err;
+    console.table(res);
+  
+  }
+};
 
-}
+function allRoles() {
+  db.query("SELECT * FROM role"), function(err, res) {
+    if (err) throw err;
+    console.table(res);
+  
+  }
+};
 
-function allRoles(data) {
-  db.query("SELECT * FROM role");
-  console.table(data);
-
-}
-
-function allEmployees(data) {
-  db.query("SELECT employee.id, employee.first_name, employee.last_name, employee.role_id, employee.manager_id, role.title, role.salary, role.id, department.id FROM employee LEFT JOIN role ON employee.role_id = role.id LEFT JOIN department ON role.department_id = department.id");
-  console.table(data);
-
-}
+function allEmployees() {
+  db.query("SELECT employee.id, employee.first_name, employee.last_name, employee.role_id, employee.manager_id, role.title, role.salary, role.id, department.id FROM employee LEFT JOIN role ON employee.role_id = role.id LEFT JOIN department ON role.department_id = department.id"), function(err, res) {
+    if (err) throw err;
+    console.table(res);
+  
+  }
+};
 
 const addDept = async () => {
   await inquirer.prompt (
@@ -76,14 +82,16 @@ const addDept = async () => {
         name: 'newDept',
         message: 'What is the name of the new Department you would like to add?'
 
-    }
-
-    .then(function (deptName) {
-      db.query("INSERT INTO department (name) VALUES (?)", [deptName.newDept]);
-
     })
+
+    .then(
+      db.query("INSERT INTO department (name) VALUES (?)", [deptName.newDept], function(err, res) {
+        if (err) throw err;
+        console.table(res);
+
+    }))
     
-)}
+};
 
 
 const addRole = async () => {
@@ -106,11 +114,13 @@ const addRole = async () => {
         message: 'What is the id of the department the new Role belongs to?'
     })
 
-    .then(function (roleName) {
-      db.query("INSERT INTO role (title, salary, department_id) VALUES (?, ?, ?)", [roleName.newRole, roleName.newSalary, roleName.newRoleDept]);
+    .then(
+      db.query("INSERT INTO role (title, salary, department_id) VALUES (?, ?, ?)", [roleName.newRole, roleName.newSalary, roleName.newRoleDept] , function(err, res) {
+        if (err) throw err;
+        console.table(res);
 
-    })
-}
+    }))
+};
 
 
 
@@ -137,12 +147,17 @@ const addEmployee = async () => {
       name: "managerID"
     }
   )
-  .then(function (employeeName) {
-    db.query("INSERT INTO employee (first_name, last_name, role_id, manager_id) VALUES (?, ?, ?, ?)", [employeeName.newFirstName, employeeName.newLastName, employeeName.newRoleID, employeeName.managerID]);
-  
-  })
-}
 
+  .then(
+    db.query("INSERT INTO employee (first_name, last_name, role_id, manager_id) VALUES (?, ?, ?, ?)", [employeeName.newFirstName, employeeName.newLastName, employeeName.newRoleID, employeeName.managerID] , function(err, res) {
+      if (err) throw err;
+      console.table(res);
+      questions();
+
+    }))
+  };
+
+ 
 async function updateEmployee() {
   await inquirer.prompt(
       {
@@ -158,23 +173,18 @@ async function updateEmployee() {
       }
     )
 
-    .then(function (update) {
-      db.query("INSERT INTO employee (first_name, last_name, role_id, manager_id) VALUES (?, ?, ?, ?)", [update.employeeUpdate, update.roleUpdate]);
-      
-    
-    })
+    .then(
+      db.query("INSERT INTO employee (first_name, last_name, role_id, manager_id) VALUES (?, ?, ?, ?)", [update.employeeUpdate, update.roleUpdate] , function(err, res) {
+        if (err) throw err;
+        console.table(res);
+        questions();
+
+    }));
 
 }
 
-function init() {
-    questions();
+async function init() {
+    await questions();
 }
 
 init();
-
-
-
-// db.query('INSERT INTO employee (first_name, last_name, role_id, manager_id) VALUES (?, ?, ?, ?)', (err, [update.employeeUpdate, update.roleUpdate]) => {
-//   if (err) throw err;
-//   console.table(update);
-// })
