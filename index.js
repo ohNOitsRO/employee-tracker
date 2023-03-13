@@ -63,7 +63,7 @@ function allRoles(data) {
 
 }
 
-function allEmployees() {
+function allEmployees(data) {
   db.query("SELECT employee.id, employee.first_name, employee.last_name, employee.role_id, employee.manager_id, role.title, role.salary, role.id, department.id FROM employee LEFT JOIN role ON employee.role_id = role.id LEFT JOIN department ON role.department_id = department.id");
   console.table(data);
 
@@ -176,5 +176,5 @@ init();
 
 // db.query('INSERT INTO employee (first_name, last_name, role_id, manager_id) VALUES (?, ?, ?, ?)', (err, [update.employeeUpdate, update.roleUpdate]) => {
 //   if (err) throw err;
-//   console.table(data);
+//   console.table(update);
 // })
