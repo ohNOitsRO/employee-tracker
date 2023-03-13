@@ -166,8 +166,8 @@ async function updateEmployee() {
 
 }
 
-async function init() {
-    await questions();
+function init() {
+    questions();
 }
 
 init();
