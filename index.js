@@ -1,6 +1,6 @@
-require('console.table');
-const inquirer = require('inquirer');
-const { db } = require('./config/connection');
+require("console.table");
+const inquirer = require("inquirer");
+const db = require("./config/connection");
 
 
 const questions = async () => {
@@ -48,32 +48,32 @@ const questions = async () => {
               process.exit();
                     
           }
-        });
+        })
 };
 
 function allDepts() {
-  db.query("SELECT * FROM department"), function(err, res) {
-    if (err) throw err;
+  db.query("SELECT * FROM department", (err, res) => {
+    if (err) throw (err);
     console.table(res);
   
   }
-};
+)};
 
 function allRoles() {
-  db.query("SELECT * FROM role"), function(err, res) {
-    if (err) throw err;
+  db.query("SELECT * FROM role", (err, res) => {
+    if (err) throw (err);
     console.table(res);
   
   }
-};
+)};
 
 function allEmployees() {
-  db.query("SELECT employee.id, employee.first_name, employee.last_name, employee.role_id, employee.manager_id, role.title, role.salary, role.id, department.id FROM employee LEFT JOIN role ON employee.role_id = role.id LEFT JOIN department ON role.department_id = department.id"), function(err, res) {
+  db.query("SELECT employee.id, employee.first_name, employee.last_name, employee.role_id, employee.manager_id, role.title, role.salary, role.id, department.id FROM employee LEFT JOIN role ON employee.role_id = role.id LEFT JOIN department ON role.department_id = department.id", (err, res) => {
     if (err) throw err;
     console.table(res);
   
   }
-};
+)};
 
 const addDept = async () => {
   await inquirer.prompt (
@@ -90,9 +90,7 @@ const addDept = async () => {
         console.table(res);
 
     }))
-    
 };
-
 
 const addRole = async () => {
   await inquirer.prompt (
@@ -122,8 +120,6 @@ const addRole = async () => {
     }))
 };
 
-
-
 const addEmployee = async () => {
   await inquirer.prompt(
     {
@@ -152,13 +148,12 @@ const addEmployee = async () => {
     db.query("INSERT INTO employee (first_name, last_name, role_id, manager_id) VALUES (?, ?, ?, ?)", [employeeName.newFirstName, employeeName.newLastName, employeeName.newRoleID, employeeName.managerID] , function(err, res) {
       if (err) throw err;
       console.table(res);
-      questions();
 
     }))
   };
 
  
-async function updateEmployee() {
+const updateEmployee = async () => {
   await inquirer.prompt(
       {
         type: "input",
@@ -177,7 +172,6 @@ async function updateEmployee() {
       db.query("INSERT INTO employee (first_name, last_name, role_id, manager_id) VALUES (?, ?, ?, ?)", [update.employeeUpdate, update.roleUpdate] , function(err, res) {
         if (err) throw err;
         console.table(res);
-        questions();
 
     }));
 
