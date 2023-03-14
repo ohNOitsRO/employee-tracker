@@ -25,7 +25,7 @@ Run the application with "node index" in the terminal command line and follow th
 
 Link to video demo of application.
 
-https://www.youtube.com/watch?v=1KRE35_eJPA
+https://www.youtube.com/watch?v=UqvSfA7Jskg
 
 ## Credits
 
