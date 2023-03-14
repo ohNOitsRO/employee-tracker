@@ -84,16 +84,16 @@ const addDept = async () => {
 
     })
 
-    .then(
+    .then(function(deptName){
       db.query("INSERT INTO department (name) VALUES (?)", [deptName.newDept], (err, res) => {
         if (err) throw (err);
         console.table(res);
 
-    }))
+    })})
 };
 
 const addRole = async () => {
-  await inquirer.prompt (
+  await inquirer.prompt ([
     {
         type: 'input',
         name: 'newRole',
@@ -110,18 +110,19 @@ const addRole = async () => {
         type: 'input',
         name: 'newRoleDept',
         message: 'What is the id of the department the new Role belongs to?'
-    })
+    }]
+    )
 
-    .then(
+    .then(function(roleName){
       db.query("INSERT INTO role (title, salary, department_id) VALUES (?, ?, ?)", [roleName.newRole, roleName.newSalary, roleName.newRoleDept] , (err, res) => {
         if (err) throw (err);
         console.table(res);
 
-    }))
+})})
 };
 
 const addEmployee = async () => {
-  await inquirer.prompt(
+  await inquirer.prompt([
     {
       type: "input",
       message: "What's the first name of the employee?",
@@ -141,20 +142,20 @@ const addEmployee = async () => {
       type: "input",
       message: "What is the manager id number?",
       name: "managerID"
-    }
+    }]
   )
 
-  .then(
+  .then(function(employeeName){
     db.query("INSERT INTO employee (first_name, last_name, role_id, manager_id) VALUES (?, ?, ?, ?)", [employeeName.newFirstName, employeeName.newLastName, employeeName.newRoleID, employeeName.managerID] , (err, res) => {
       if (err) throw (err);
       console.table(res);
 
-    }))
+    })})
   };
 
  
 const updateEmployee = async () => {
-  await inquirer.prompt(
+  await inquirer.prompt([
       {
         type: "input",
         message: "Which employee would you like to update?",
@@ -163,19 +164,19 @@ const updateEmployee = async () => {
 
       {
         type: "input",
-        message: "What do you want to update to?",
+        message: "What is the employees new role ID?",
         name: "roleUpdate"
-      }
+      }]
     )
 
-    .then(
-      db.query("INSERT INTO employee (first_name, last_name, role_id, manager_id) VALUES (?, ?, ?, ?)", [update.employeeUpdate, update.roleUpdate] , (err, res) => {
+    .then(function(update){
+      db.query("UPDATE employee SET role_id=? WHERE first_name= ?", [update.employeeUpdate, update.roleUpdate], (err, res) => {
         if (err) throw (err);
         console.table(res);
 
-    }));
+    })})
 
-}
+};
 
 async function init() {
     await questions();
