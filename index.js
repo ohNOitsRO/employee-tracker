@@ -69,7 +69,7 @@ function allRoles() {
 
 function allEmployees() {
   db.query("SELECT employee.id, employee.first_name, employee.last_name, employee.role_id, employee.manager_id, role.title, role.salary, role.id, department.id FROM employee LEFT JOIN role ON employee.role_id = role.id LEFT JOIN department ON role.department_id = department.id", (err, res) => {
-    if (err) throw err;
+    if (err) throw (err);
     console.table(res);
   
   }
@@ -85,8 +85,8 @@ const addDept = async () => {
     })
 
     .then(
-      db.query("INSERT INTO department (name) VALUES (?)", [deptName.newDept], function(err, res) {
-        if (err) throw err;
+      db.query("INSERT INTO department (name) VALUES (?)", [deptName.newDept], (err, res) => {
+        if (err) throw (err);
         console.table(res);
 
     }))
@@ -113,8 +113,8 @@ const addRole = async () => {
     })
 
     .then(
-      db.query("INSERT INTO role (title, salary, department_id) VALUES (?, ?, ?)", [roleName.newRole, roleName.newSalary, roleName.newRoleDept] , function(err, res) {
-        if (err) throw err;
+      db.query("INSERT INTO role (title, salary, department_id) VALUES (?, ?, ?)", [roleName.newRole, roleName.newSalary, roleName.newRoleDept] , (err, res) => {
+        if (err) throw (err);
         console.table(res);
 
     }))
@@ -145,8 +145,8 @@ const addEmployee = async () => {
   )
 
   .then(
-    db.query("INSERT INTO employee (first_name, last_name, role_id, manager_id) VALUES (?, ?, ?, ?)", [employeeName.newFirstName, employeeName.newLastName, employeeName.newRoleID, employeeName.managerID] , function(err, res) {
-      if (err) throw err;
+    db.query("INSERT INTO employee (first_name, last_name, role_id, manager_id) VALUES (?, ?, ?, ?)", [employeeName.newFirstName, employeeName.newLastName, employeeName.newRoleID, employeeName.managerID] , (err, res) => {
+      if (err) throw (err);
       console.table(res);
 
     }))
@@ -169,8 +169,8 @@ const updateEmployee = async () => {
     )
 
     .then(
-      db.query("INSERT INTO employee (first_name, last_name, role_id, manager_id) VALUES (?, ?, ?, ?)", [update.employeeUpdate, update.roleUpdate] , function(err, res) {
-        if (err) throw err;
+      db.query("INSERT INTO employee (first_name, last_name, role_id, manager_id) VALUES (?, ?, ?, ?)", [update.employeeUpdate, update.roleUpdate] , (err, res) => {
+        if (err) throw (err);
         console.table(res);
 
     }));
